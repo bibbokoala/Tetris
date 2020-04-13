@@ -7,22 +7,20 @@
 button {
   border: none;
   color: white;
-  padding: 30px;
+  padding: 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 40px;
+  font-size: 20px;
   margin: 3px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   cursor: pointer;
-  min-height: 150px;
 }
 .verde{ background-color: #4CAF50; }
 .blu{ background-color: #4C50AF; }
 .arancione{ background-color: orange; }
 .minimo{
-  min-width: 150px;
-  width: 47%;
+  width: 45%;
 }
 .block{
   display: block;
@@ -34,9 +32,11 @@ button {
 <script src="blockrain.jquery.js"></script>
 </head>
 <body>
-<div class="game" style="width:600px; height:1200px;float:left; display:block;"></div>
-<div class="control" style="float:left; display:block; width:350px; height:1200px;">
+<div class="game" style="width:250px; height:600px;float:left; display:block"></div>
+<div class="control" style="float:left; display:block; width:200px; height:600px; valign:bottom">
+	<br style="line-height:100px" />
 <button class='block verde' id='pause'>Pause</button>
+	<br style="line-height:200px" />
 <button class='minimo blu' id='rleft'>Rotate Left</button>
 <button class='minimo blu' id='rright'>Rotate Right</button>
 <button class='minimo blu' id='left'><< LEFT</button>
