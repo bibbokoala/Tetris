@@ -4,7 +4,7 @@
 <!-- The stylesheet should go in the <head>, or be included in your CSS -->
 <link rel="stylesheet" href="blockrain_custom.css">
 <style>
-body{ margin:0 auto; }
+body{ margin:0 auto; background-color: #333;}
 button {
   border: none;
   color: white;
@@ -42,17 +42,70 @@ button {
 </div>
 <div style="clear:both;"></div>
 <script>
-    $('.game').blockrain();
+	$(document).ready(function() {
+	    console.log( "ready!" );
+	    // $('.game').blockrain();
+	    $('.game').blockrain(
+		 { 
+			showFieldOnStart: true,
+			onGameOver: function(score){
+				show_reward(score);
+			},
+			onLine: function(lines, scoreIncrement, score){
+				console.log("Lines: " + lines + " - Score: " + scoreIncrement +" - Total Points: "+ score);
+				switch(lines) {
+				  case 1:
+					var audio = new Audio('assets/audio/1lines.wav');
+	                audio.play();
+				    break;
+				  case 2:
+					var audio = new Audio('assets/audio/2lines.wav');
+	                audio.play();
+				    break;
+				  case 3:
+					var audio = new Audio('assets/audio/3lines.wav');
+	                audio.play();
+				    break;
+				  case 4:
+					var audio = new Audio('assets/audio/4lines.wav');
+	                audio.play();
+				    break;
+				  default:
+				    break;
+				} 
+			},
+			onPlaced: function(){
+				var audio = new Audio('assets/audio/toc.mp3');
+                audio.play();
+			},
+		 });
+	});
+
+	function show_reward(score){
+		alert("Your score is: " + score);
+	}
+
+
     // Pause
     $( "#pause" ).click(function() {
     	var text = $( "#pause" ).text();
     	if (text === 'Pause' ){
     		$('#pause').text("Resume");
   			$('.game').blockrain('pause');
+  			$('#rleft').attr("disabled", true);
+  			$('#rright').attr("disabled", true);
+  			$('#left').attr("disabled", true);
+  			$('#right').attr("disabled", true);
+  			$('#down').attr("disabled", true);
     	}
     	else{
     		$('#pause').text("Pause");
   			$('.game').blockrain('resume');
+  			$('#rleft').attr("disabled", false);
+  			$('#rright').attr("disabled", false);
+  			$('#left').attr("disabled", false);
+  			$('#right').attr("disabled", false);
+  			$('#down').attr("disabled", false);
     	}
 	});
 
