@@ -1,0 +1,127 @@
+<html>
+<head>
+<!-- DOCUMENTATION https://github.com/Aerolab/blockrain.js/ -->
+<!-- The stylesheet should go in the <head>, or be included in your CSS -->
+<link rel="stylesheet" href="blockrain_custom.css">
+<style>
+button {
+  border: none;
+  color: white;
+  padding: 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 40px;
+  margin: 3px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  min-height: 150px;
+}
+.verde{ background-color: #4CAF50; }
+.blu{ background-color: #4C50AF; }
+.arancione{ background-color: orange; }
+.minimo{
+  min-width: 150px;
+  width: 47%;
+}
+.block{
+  display: block;
+  width: 97%;
+}
+</style>
+<!-- jQuery and Blockrain.js -->
+<script src="jquery.js"></script>
+<script src="blockrain.jquery.js"></script>
+</head>
+<body>
+<div class="game" style="width:600px; height:1200px;float:left; display:block;"></div>
+<div class="control" style="float:left; display:block; width:350px; height:1200px;">
+<button class='block verde' id='pause'>Pause</button>
+<button class='minimo blu' id='rleft'>Rotate Left</button>
+<button class='minimo blu' id='rright'>Rotate Right</button>
+<button class='minimo blu' id='left'><< LEFT</button>
+<button class='minimo blu' id='right'>>> RIGHT</button>
+<button class='block arancione' id='down'>Down</button>
+</div>
+<div style="clear:both;"></div>
+<script>
+    $('.game').blockrain();
+    // Pause
+    $( "#pause" ).click(function() {
+    	var text = $( "#pause" ).text();
+    	if (text === 'Pause' ){
+    		$('#pause').text("Resume");
+  			$('.game').blockrain('pause');
+    	}
+    	else{
+    		$('#pause').text("Pause");
+  			$('.game').blockrain('resume');
+    	}
+	});
+
+	//Rotate Right 38
+    $( "#rright" ).click(function() {    
+    	var key = 38;
+    	simulateKey(key);
+	});
+
+	//Rotate Left 90
+    $( "#rleft" ).click(function() {    
+    	var key = 90;
+    	simulateKey(key);
+	});
+
+	//Right 39
+    $( "#right" ).click(function() {    
+    	var key = 39;
+    	simulateKey(key);
+	});
+
+	//Left 37
+    $( "#left" ).click(function() {    
+    	var key = 37;
+    	simulateKey(key);
+	});
+
+	//Down 40
+    $( "#down" ).click(function() {    
+    	var key = 40;
+    	simulateKey(key);
+	});
+
+function simulateKey (keyCode, type, modifiers) {
+	var evtName = (typeof(type) === "string") ? "key" + type : "keydown";	
+	var modifier = (typeof(modifiers) === "object") ? modifier : {};
+	var event = document.createEvent("HTMLEvents");
+	event.initEvent(evtName, true, false);
+	event.keyCode = keyCode;
+	for (var i in modifiers) {
+		event[i] = modifiers[i];
+	}
+	document.dispatchEvent(event);
+	var evtName = (typeof(type) === "string") ? "key" + type : "keyup";	
+	var modifier = (typeof(modifiers) === "object") ? modifier : {};
+	var event = document.createEvent("HTMLEvents");
+	event.initEvent(evtName, true, false);
+	event.keyCode = keyCode;
+	for (var i in modifiers) {
+		event[i] = modifiers[i];
+	}
+	document.dispatchEvent(event);
+}
+// Setup some tests
+var onKeyEvent = function (event) {
+	var state = "pressed";
+		if (event.type !== "keypress") {
+		state = event.type.replace("key", "");
+	}
+	console.log("Key with keyCode " + event.keyCode + " is " + state);
+};
+
+document.addEventListener("keypress", onKeyEvent, false);
+document.addEventListener("keydown", onKeyEvent, false);
+document.addEventListener("keyup", onKeyEvent, false);
+
+</script>
+</body>
+</html>
