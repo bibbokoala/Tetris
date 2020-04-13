@@ -25,12 +25,12 @@
       autoBlockWidth: false, // The blockWidth is dinamically calculated based on the autoBlockSize. Disabled blockWidth. Useful for responsive backgrounds
       autoBlockSize: 24, // The max size of a block for autowidth mode
       difficulty: 'normal', // Difficulty (normal|nice|evil).
-      speed: 20, // The speed of the game. The higher, the faster the pieces go.
+      speed: 10, // The speed of the game. The higher, the faster the pieces go.
       asdwKeys: true, // Enable ASDW keys
 
       // Copy
-      playText: 'Let\'s play some Tetris',
-      playButtonText: 'Play',
+      playText: 'created by Simone Tonni ',
+      playButtonText: 'Play Tetris',
       gameOverText: 'Game Over',
       restartButtonText: 'Play Again',
       scoreText: 'Score',

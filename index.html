@@ -8,21 +8,23 @@ body{ margin:0 auto; }
 button {
   border: none;
   color: white;
-  padding: 10px;
+  padding: 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 20px;
-  margin: 3px;
-  margin-bottom: 10px;
+  margin-left: 5px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   cursor: pointer;
-  height: 60px;
+  height: 90px;
   display: block;
   width: 100%;
 }
-.verde{ background-color: #4CAF50; }
-.blu{ background-color: #4C50AF; }
-.arancione{ background-color: orange; }
+.verde{ background-color: #28a745; }
+.rosso{ background-color: #dc3545; }
+.blu{ background-color: #007bff; }
+.arancione{ background-color: #ffc107; }
 </style>
 <!-- jQuery and Blockrain.js -->
 <script src="jquery.js"></script>
@@ -30,13 +32,12 @@ button {
 </head>
 <body>
 <div class="game" style="width:250px; height:580px;float:left; display:block"></div>
-<div class="control" style="float:left; display:block; width:80px; height:580px; valign:bottom">
-	<br style="line-height:100px" />
-<button class='verde' id='pause'>P</button>
-<button class='blu' id='rleft'>Rotate Left</button>
-<button class='blu' id='rright'>Rotate Right</button>
-<button class='blu' id='left'><< LEFT</button>
-<button class='blu' id='right'>>> RIGHT</button>
+<div class="control" style="float:left; display:block; width:90px; height:580px; valign:bottom">
+<button class='verde' id='pause'>Pause</button>
+<button class='rosso' id='rleft'><img src='assets/control/rotate_left.png' /></button>
+<button class='blu' id='rright'><img src='assets/control/rotate_right.png' /></button>
+<button class='rosso' id='left'><img src='assets/control/left.png' /></button>
+<button class='blu' id='right'><img src='assets/control/right.png' /></button>
 <button class='arancione' id='down'>Down</button>
 </div>
 <div style="clear:both;"></div>
