@@ -17,8 +17,16 @@ button {
   margin-top: 6px;
   margin-bottom: 6px;
   cursor: pointer;
-  height: 90px;
+  height: 87px;
   display: block;
+  width: 100%;
+}
+#level{
+  background-color: #FFF; 
+  font-family: "Lucida Console", Courier, monospace;
+  margin-left: 5px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   width: 100%;
 }
 .verde{ background-color: #28a745; }
@@ -33,6 +41,7 @@ button {
 <body>
 <div class="game" style="width:250px; height:580px;float:left; display:block"></div>
 <div class="control" style="float:left; display:block; width:90px; height:580px; valign:bottom">
+<div id='level'>Level: 1</div> 
 <button class='verde' id='pause'>Pause</button>
 <button class='rosso' id='rleft'><img src='assets/control/rotate_left.png' /></button>
 <button class='blu' id='rright'><img src='assets/control/rotate_right.png' /></button>
@@ -42,12 +51,13 @@ button {
 </div>
 <div style="clear:both;"></div>
 <script>
+	//GLOBAL VALUE FOR THE GAME
+ 	var _tot_lines = 0;
+ 	var _new_speed = 10;
+ 	var _level = 1;
 	$(document).ready(function() {
 	    console.log( "ready!" );
 	    // $('.game').blockrain();
-	 	var tot_lines = 0;
-	 	var new_speed = 10;
-	 	var level = 1;
 	    $('.game').blockrain(
 		 { 
 			showFieldOnStart: true,
@@ -56,7 +66,7 @@ button {
 			},
 			onLine: function(lines, scoreIncrement, score){
 				console.log("Lines: " + lines + " - Score: " + scoreIncrement +" - Total Points: "+ score);
-				tot_lines += lines
+				_tot_lines += lines
 				switch(lines) {
 				  case 1:
 					var audio = new Audio('assets/audio/lineClear.mp3');
@@ -77,16 +87,17 @@ button {
 				  default:
 				    break;
 				} 
-				if (tot_lines>=10){
+				if (_tot_lines>=10){
 					//change speed on ever level up.
-					tot_lines += -10;
-					new_speed += 10;
-					level += 1;
-					$('.game').blockrain({ speed: new_speed });
+					_tot_lines += -10;
+					_new_speed += 5;
+					_level += 1;
+					$('.game').blockrain({ speed: _new_speed });
 					var audio = new Audio('assets/audio/levelUp.mp3');
 	                audio.play();
+	                $('#level').html("Level: " + _level);
 				}
-				console.log("Level: " + level + " - Lines: " + tot_lines + " - Speed: "  +new_speed);
+				console.log("Level: " + _level + " - Lines: " + _tot_lines + " - Speed: "  +_new_speed);
 			},
 			onPlaced: function(){
 				var audio = new Audio('assets/audio/lock.mp3');
@@ -97,6 +108,11 @@ button {
 
 	function show_reward(score){
 		alert("Your score is: " + score);
+		//RESET VALUE OF GLOBAL VARIABLE.
+	 	_tot_lines = 0;
+	 	_new_speed = 10;
+	 	_level = 1;
+		$('.game').blockrain({ speed: _new_speed });
 	}
 
 
