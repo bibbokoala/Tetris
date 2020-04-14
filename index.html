@@ -82,6 +82,9 @@ input{
 
   $(document).ready(function() {
 
+    var audio = new Audio('assets/audio/tetrisTheme.mp3');
+    audio.play();
+
     //BOTTONE ACCEDI PER EFFETTUARE IL LOGIN:
     $("#btn_login").click(function(){
         if ($("#email").val() != "" && $("#psw").val() != "") {
