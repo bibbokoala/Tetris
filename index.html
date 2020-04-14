@@ -55,19 +55,19 @@ button {
 				console.log("Lines: " + lines + " - Score: " + scoreIncrement +" - Total Points: "+ score);
 				switch(lines) {
 				  case 1:
-					var audio = new Audio('assets/audio/1lines.wav');
+					var audio = new Audio('assets/audio/lineClear.mp3');
 	                audio.play();
 				    break;
 				  case 2:
-					var audio = new Audio('assets/audio/2lines.wav');
+					var audio = new Audio('assets/audio/lineClear.mp3');
 	                audio.play();
 				    break;
 				  case 3:
-					var audio = new Audio('assets/audio/3lines.wav');
+					var audio = new Audio('assets/audio/collapse.mp3');
 	                audio.play();
 				    break;
 				  case 4:
-					var audio = new Audio('assets/audio/4lines.wav');
+					var audio = new Audio('assets/audio/tetris.mp3');
 	                audio.play();
 				    break;
 				  default:
@@ -75,7 +75,7 @@ button {
 				} 
 			},
 			onPlaced: function(){
-				var audio = new Audio('assets/audio/toc.mp3');
+				var audio = new Audio('assets/audio/lock.mp3');
                 audio.play();
 			},
 		 });
@@ -97,6 +97,8 @@ button {
   			$('#left').attr("disabled", true);
   			$('#right').attr("disabled", true);
   			$('#down').attr("disabled", true);
+			var audio = new Audio('assets/audio/hold.mp3');
+		    audio.play();
     	}
     	else{
     		$('#pause').text("Pause");
@@ -106,6 +108,8 @@ button {
   			$('#left').attr("disabled", false);
   			$('#right').attr("disabled", false);
   			$('#down').attr("disabled", false);
+			var audio = new Audio('assets/audio/backToBackTetris.mp3');
+		    audio.play();
     	}
 	});
 
@@ -113,30 +117,40 @@ button {
     $( "#rright" ).click(function() {    
     	var key = 38;
     	simulateKey(key);
+		var audio = new Audio('assets/audio/rotate.mp3');
+	    audio.play();
 	});
 
 	//Rotate Left 90
     $( "#rleft" ).click(function() {    
     	var key = 90;
     	simulateKey(key);
+		var audio = new Audio('assets/audio/rotate.mp3');
+	    audio.play();
 	});
 
 	//Right 39
     $( "#right" ).click(function() {    
     	var key = 39;
     	simulateKey(key);
+		var audio = new Audio('assets/audio/move.mp3');
+	    audio.play();
 	});
 
 	//Left 37
     $( "#left" ).click(function() {    
     	var key = 37;
     	simulateKey(key);
+		var audio = new Audio('assets/audio/move.mp3');
+	    audio.play();
 	});
 
 	//Down 40
     $( "#down" ).click(function() {    
     	var key = 40;
     	simulateKey(key);
+		var audio = new Audio('assets/audio/move.mp3');
+	    audio.play();
 	});
 
 function simulateKey (keyCode, type, modifiers) {

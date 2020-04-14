@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TETRIS</title>
+<style> 
+body{
+  font-family: "Lucida Console", Courier, monospace;
+}
+input{
+  border: 1px solid #ccc!important;
+  border-radius: 5px;
+  padding: 10px; 
+  font-size: 18px;
+}
+.login {
+  color:#FFFFFF;
+  background: #008000;
+  width: 100px;
+  height: 45px;  
+}
+.btn {
+  color:#FFFFFF;
+  background: #800000;
+  width: 100px;
+  height: 45px;  
+}
+</style>
+</head>
+<body>
+<h1>TETRIS</h1>
+<form action="action_page.php" method="post">
+  <div class="imgcontainer">
+    <img src="icon.png" alt="Icon" id="icon">
+  </div>
+  <br>
+  <div class="container">
+    <label for="email"><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" name="email" id="email" required>
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+	<input type='submit' class='login' value='Login' />
+    <label>
+      <input type="checkbox" checked="checked" name="remember"> Remember me
+    </label>
+  </div>
+  <div class="container">
+    <input type="button" class="btn" value='Cancel' id='cancel' />
+	<br>
+	<br>
+    <a href="#">Registration</a>
+	<br>
+	<br>
+    <a href="#">Forgot password?</a>
+  </div>
+</form>
+</body>
+</html>
