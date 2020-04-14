@@ -51,10 +51,12 @@ button {
 </div>
 <div style="clear:both;"></div>
 <script>
-	//GLOBAL VALUE FOR THE GAME
- 	var _tot_lines = 0;
- 	var _new_speed = 10;
- 	var _level = 1;
+//GLOBAL VALUE FOR THE GAME
+var _tot_lines = 0;
+var _new_speed = 10;
+var _level = 1;
+var _theme = ['','','gameboy','candy','custom','modern','retro','monochrome','aerolab','vim',
+                    'gameboy','candy','custom','modern','retro','monochrome','aerolab','vim']
 	$(document).ready(function() {
 	    console.log( "ready!" );
 	    // $('.game').blockrain();
@@ -93,6 +95,7 @@ button {
 					_new_speed += 5;
 					_level += 1;
 					$('.game').blockrain({ speed: _new_speed });
+					$('.game').blockrain( 'theme', _theme[_level] );
 					var audio = new Audio('assets/audio/levelUp.mp3');
 	                audio.play();
 	                $('#level').html("Level: " + _level);
