@@ -1,5 +1,7 @@
 <html>
 <head>
+	<meta charset="utf-8" />
+<title>TETRIS</title>
 <!-- DOCUMENTATION https://github.com/Aerolab/blockrain.js/ -->
 <!-- The stylesheet should go in the <head>, or be included in your CSS -->
 <link rel="stylesheet" href="blockrain_custom.css">
@@ -51,12 +53,27 @@ button {
 </div>
 <div style="clear:both;"></div>
 <script>
-//GLOBAL VALUE FOR THE GAME
-var _tot_lines = 0;
-var _new_speed = 10;
-var _level = 1;
-var _theme = ['','','gameboy','candy','custom','modern','retro','monochrome','aerolab','vim',
-                    'gameboy','candy','custom','modern','retro','monochrome','aerolab','vim']
+	function debugLocalStorage(){
+		console.log("***** START debugLocalStorage *****");
+		for (var i = 0; i < localStorage.length; i++){
+		  console.log(i + ") [localStorage] chiave: " + localStorage.key(i) + " - valore: " + localStorage.getItem(localStorage.key(i)));
+		}
+		console.log("*****  END debugLocalStorage  *****");
+	}
+	//CHECK LOGIN IS OK:
+    var auth = localStorage.getItem("auth");
+    var token = localStorage.getItem("token");
+    var login = localStorage.getItem("login");
+    if (auth.localeCompare("OK")!=0){
+    	window.location = "login.html";
+    }
+    debugLocalStorage();
+	//GLOBAL VALUE FOR THE GAME
+	var _tot_lines = 0;
+	var _new_speed = 10;
+	var _level = 1;
+	var _theme = ['','','gameboy','candy','custom','modern','retro','monochrome','aerolab','vim',
+	                    'gameboy','candy','custom','modern','retro','monochrome','aerolab','vim']
 	$(document).ready(function() {
 	    console.log( "ready!" );
 	    // $('.game').blockrain();
