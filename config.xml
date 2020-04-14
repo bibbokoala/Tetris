@@ -68,7 +68,7 @@
 -->
     <plugin name="cordova-plugin-geolocation" />
     <plugin name="cordova-plugin-globalization" />
-<plugin name="org.apache.cordova.inappbrowser" spec="0.5.2" source="pgb" />
+    <plugin name="org.apache.cordova.inappbrowser" />
     <plugin name="cordova-plugin-media" />
     <plugin name="cordova-plugin-network-information" />
     <plugin name="cordova-plugin-splashscreen" />
