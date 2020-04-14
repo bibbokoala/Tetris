@@ -128,11 +128,24 @@ button {
 
 	function show_reward(score){
 		alert("Your score is: " + score);
+		console.log("Your score is: " + score);
 		//RESET VALUE OF GLOBAL VARIABLE.
 	 	_tot_lines = 0;
 	 	_new_speed = 10;
 	 	_level = 1;
 		$('.game').blockrain({ speed: _new_speed });
+        var email = localStorage.getItem("email");
+        var psw = localStorage.getItem("psw");
+		console.log("EMAIL=["+email+"]");
+        console.log("PSW=["+psw+"]");
+        //http://www.linkin.it/Projects/TETRIS/TetrisPoints.php?email=simone.tonni@gmail.com&psw=tonni&points=100
+        $.ajax({    url : "http://www.linkin.it/Projects/TETRIS/TetrisPoints.php",
+          cache : false,
+          dataType : "json",
+          data : { email : email, psw: psw, points: score},
+          success: console.log('Update Points Success!'),
+          error: console.log('Update Points ERROR!')
+        }); 
 	}
 
 
