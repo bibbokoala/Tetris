@@ -65,7 +65,6 @@
 <!--
     <plugin name="cordova-plugin-file" />
     <plugin name="cordova-plugin-file-transfer" />
--->
     <plugin name="cordova-plugin-geolocation" />
     <plugin name="cordova-plugin-globalization" />
     <plugin name="cordova-plugin-inappbrowser" />
@@ -73,6 +72,7 @@
     <plugin name="cordova-plugin-network-information" />
     <plugin name="cordova-plugin-splashscreen" />
     <plugin name="cordova-plugin-vibration" />
+-->
     <!-- cordova-plugin-insomnia PLUGIN PER DISABILITARE LO SLEEP DELLO SMARTPHONE -->
     <plugin name="cordova-plugin-insomnia" />
     <!-- plugin unsupported: cordova-plugin-device @ 1.0.1 
@@ -135,6 +135,8 @@
     <gap:config-file platform="ios" parent="CFBundleShortVersionString">
     <string>100</string>
     </gap:config-file>
+
+    <gap:plugin name="org.apache.cordova.inappbrowser" version="0.5.2">
 
     <!--
         Define access to external domains.
