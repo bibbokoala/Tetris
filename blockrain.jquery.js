@@ -655,10 +655,24 @@
         },
         _updateScore: function(numLines) {
           if( numLines <= 0 ) { return; }
-          var scores = [0,400,1000,3000,12000];
+          //SIMONE OLD SCORE: var scores = [0,400,1000,3000,12000];
+          //SPEED: game.options.speed
+          //DEBUG console.log('speed: ' + game.options.speed);
+          var current_speed = game.options.speed;
+          var div_speed = current_speed-10; //level 1
+          if(div_speed>0){
+            div_speed= (div_speed/3)+1; //from level 2 and other
+          }
+          else{
+            div_speed = 1;
+          }
+          var scores = [0,40,100,300,1200];
           if( numLines >= scores.length ){ numLines = scores.length-1 }
 
-          this.score += scores[numLines];
+          //SIMONE this.score += scores[numLines];
+          var act_points = scores[numLines] * div_speed; 
+          console.log('act_points: ' + act_points);
+          this.score += act_points;
           game._$scoreText.text(this.score);
 
           game.options.onLine.call(game.element, numLines, scores[numLines], this.score);

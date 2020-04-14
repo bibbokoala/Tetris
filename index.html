@@ -89,10 +89,10 @@ var _theme = ['','','gameboy','candy','custom','modern','retro','monochrome','ae
 				  default:
 				    break;
 				} 
+				//CHANGE LEVEL!
 				if (_tot_lines>=10){
-					//change speed on ever level up.
 					_tot_lines += -10;
-					_new_speed += 5;
+					_new_speed += 3;
 					_level += 1;
 					$('.game').blockrain({ speed: _new_speed });
 					$('.game').blockrain( 'theme', _theme[_level] );
