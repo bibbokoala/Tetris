@@ -45,6 +45,9 @@ button {
 	$(document).ready(function() {
 	    console.log( "ready!" );
 	    // $('.game').blockrain();
+	 	var tot_lines = 0;
+	 	var new_speed = 10;
+	 	var level = 1;
 	    $('.game').blockrain(
 		 { 
 			showFieldOnStart: true,
@@ -53,6 +56,7 @@ button {
 			},
 			onLine: function(lines, scoreIncrement, score){
 				console.log("Lines: " + lines + " - Score: " + scoreIncrement +" - Total Points: "+ score);
+				tot_lines += lines
 				switch(lines) {
 				  case 1:
 					var audio = new Audio('assets/audio/lineClear.mp3');
@@ -73,6 +77,16 @@ button {
 				  default:
 				    break;
 				} 
+				if (tot_lines>=10){
+					//change speed on ever level up.
+					tot_lines += -10;
+					new_speed += 10;
+					level += 1;
+					$('.game').blockrain({ speed: new_speed });
+					var audio = new Audio('assets/audio/levelUp.mp3');
+	                audio.play();
+				}
+				console.log("Level: " + level + " - Lines: " + tot_lines + " - Speed: "  +new_speed);
 			},
 			onPlaced: function(){
 				var audio = new Audio('assets/audio/lock.mp3');
