@@ -68,7 +68,10 @@
 -->
     <plugin name="cordova-plugin-geolocation" />
     <plugin name="cordova-plugin-globalization" />
-    <plugin name="org.apache.cordova.inappbrowser" />
+<!-- <plugin name="org.apache.cordova.inappbrowser" /> -->
+<config-file platform="android" parent="/manifest">
+    <uses-sdk tools:overrideLibrary="org.apache.cordova.inappbrowser" />
+</config-file>
     <plugin name="cordova-plugin-media" />
     <plugin name="cordova-plugin-network-information" />
     <plugin name="cordova-plugin-splashscreen" />
