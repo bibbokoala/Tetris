@@ -1,241 +1,137 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
-<title>TETRIS</title>
-<!-- DOCUMENTATION https://github.com/Aerolab/blockrain.js/ -->
-<!-- The stylesheet should go in the <head>, or be included in your CSS -->
-<link rel="stylesheet" href="blockrain_custom.css">
-<style>
-body{ margin:0 auto; background-color: #333;}
-button {
-  border: none;
-  color: white;
-  padding: 0px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 20px;
-  margin-left: 5px;
-  margin-top: 6px;
-  margin-bottom: 6px;
-  cursor: pointer;
-  height: 87px;
-  display: block;
-  width: 100%;
-}
-#level{
-  background-color: #FFF; 
-  font-family: "Lucida Console", Courier, monospace;
-  margin-left: 5px;
-  margin-top: 6px;
-  margin-bottom: 6px;
-  width: 100%;
-}
-.verde{ background-color: #28a745; }
-.rosso{ background-color: #dc3545; }
-.blu{ background-color: #007bff; }
-.arancione{ background-color: #ffc107; }
-</style>
-<!-- jQuery and Blockrain.js -->
+  <meta charset="utf-8" />
+<title>TETRIS Login</title>
 <script src="jquery.js"></script>
-<script src="blockrain.jquery.js"></script>
-</head>
-<body>
-<div class="game" style="width:250px; height:580px;float:left; display:block"></div>
-<div class="control" style="float:left; display:block; width:90px; height:580px; valign:bottom">
-<div id='level'>Level: 1</div> 
-<button class='verde' id='pause'>Pause</button>
-<button class='rosso' id='rleft'><img src='assets/control/rotate_left.png' /></button>
-<button class='blu' id='rright'><img src='assets/control/rotate_right.png' /></button>
-<button class='rosso' id='left'><img src='assets/control/left.png' /></button>
-<button class='blu' id='right'><img src='assets/control/right.png' /></button>
-<button class='arancione' id='down'>Down</button>
-</div>
-<div style="clear:both;"></div>
-<script>
-	function debugLocalStorage(){
-		console.log("***** START debugLocalStorage *****");
-		for (var i = 0; i < localStorage.length; i++){
-		  console.log(i + ") [localStorage] chiave: " + localStorage.key(i) + " - valore: " + localStorage.getItem(localStorage.key(i)));
-		}
-		console.log("*****  END debugLocalStorage  *****");
-	}
-	//CHECK LOGIN IS OK:
-    var auth = localStorage.getItem("auth");
-    var token = localStorage.getItem("token");
-    var login = localStorage.getItem("login");
-    if (auth.localeCompare("OK")!=0){
-    	window.location = "login.html";
-    }
-    debugLocalStorage();
-	//GLOBAL VALUE FOR THE GAME
-	var _tot_lines = 0;
-	var _new_speed = 10;
-	var _level = 1;
-	var _theme = ['','','gameboy','candy','custom','modern','retro','monochrome','aerolab','vim',
-	                    'gameboy','candy','custom','modern','retro','monochrome','aerolab','vim']
-	$(document).ready(function() {
-	    console.log( "ready!" );
-	    // $('.game').blockrain();
-	    $('.game').blockrain(
-		 { 
-			showFieldOnStart: true,
-			onGameOver: function(score){
-				show_reward(score);
-			},
-			onLine: function(lines, scoreIncrement, score){
-				console.log("Lines: " + lines + " - Score: " + scoreIncrement +" - Total Points: "+ score);
-				_tot_lines += lines
-				switch(lines) {
-				  case 1:
-					var audio = new Audio('assets/audio/lineClear.mp3');
-	                audio.play();
-				    break;
-				  case 2:
-					var audio = new Audio('assets/audio/lineClear.mp3');
-	                audio.play();
-				    break;
-				  case 3:
-					var audio = new Audio('assets/audio/collapse.mp3');
-	                audio.play();
-				    break;
-				  case 4:
-					var audio = new Audio('assets/audio/tetris.mp3');
-	                audio.play();
-				    break;
-				  default:
-				    break;
-				} 
-				//CHANGE LEVEL!
-				if (_tot_lines>=10){
-					_tot_lines += -10;
-					_new_speed += 3;
-					_level += 1;
-					$('.game').blockrain({ speed: _new_speed });
-					$('.game').blockrain( 'theme', _theme[_level] );
-					var audio = new Audio('assets/audio/levelUp.mp3');
-	                audio.play();
-	                $('#level').html("Level: " + _level);
-				}
-				console.log("Level: " + _level + " - Lines: " + _tot_lines + " - Speed: "  +_new_speed);
-			},
-			onPlaced: function(){
-				var audio = new Audio('assets/audio/lock.mp3');
-                audio.play();
-			},
-		 });
-	});
-
-	function show_reward(score){
-		alert("Your score is: " + score);
-		//RESET VALUE OF GLOBAL VARIABLE.
-	 	_tot_lines = 0;
-	 	_new_speed = 10;
-	 	_level = 1;
-		$('.game').blockrain({ speed: _new_speed });
-	}
-
-
-    // Pause
-    $( "#pause" ).click(function() {
-    	var text = $( "#pause" ).text();
-    	if (text === 'Pause' ){
-    		$('#pause').text("Resume");
-  			$('.game').blockrain('pause');
-  			$('#rleft').attr("disabled", true);
-  			$('#rright').attr("disabled", true);
-  			$('#left').attr("disabled", true);
-  			$('#right').attr("disabled", true);
-  			$('#down').attr("disabled", true);
-			var audio = new Audio('assets/audio/hold.mp3');
-		    audio.play();
-    	}
-    	else{
-    		$('#pause').text("Pause");
-  			$('.game').blockrain('resume');
-  			$('#rleft').attr("disabled", false);
-  			$('#rright').attr("disabled", false);
-  			$('#left').attr("disabled", false);
-  			$('#right').attr("disabled", false);
-  			$('#down').attr("disabled", false);
-			var audio = new Audio('assets/audio/backToBackTetris.mp3');
-		    audio.play();
-    	}
-	});
-
-	//Rotate Right 38
-    $( "#rright" ).click(function() {    
-    	var key = 38;
-    	simulateKey(key);
-		var audio = new Audio('assets/audio/rotate.mp3');
-	    audio.play();
-	});
-
-	//Rotate Left 90
-    $( "#rleft" ).click(function() {    
-    	var key = 90;
-    	simulateKey(key);
-		var audio = new Audio('assets/audio/rotate.mp3');
-	    audio.play();
-	});
-
-	//Right 39
-    $( "#right" ).click(function() {    
-    	var key = 39;
-    	simulateKey(key);
-		var audio = new Audio('assets/audio/move.mp3');
-	    audio.play();
-	});
-
-	//Left 37
-    $( "#left" ).click(function() {    
-    	var key = 37;
-    	simulateKey(key);
-		var audio = new Audio('assets/audio/move.mp3');
-	    audio.play();
-	});
-
-	//Down 40
-    $( "#down" ).click(function() {    
-    	var key = 40;
-    	simulateKey(key);
-		var audio = new Audio('assets/audio/move.mp3');
-	    audio.play();
-	});
-
-function simulateKey (keyCode, type, modifiers) {
-	var evtName = (typeof(type) === "string") ? "key" + type : "keydown";	
-	var modifier = (typeof(modifiers) === "object") ? modifier : {};
-	var event = document.createEvent("HTMLEvents");
-	event.initEvent(evtName, true, false);
-	event.keyCode = keyCode;
-	for (var i in modifiers) {
-		event[i] = modifiers[i];
-	}
-	document.dispatchEvent(event);
-	var evtName = (typeof(type) === "string") ? "key" + type : "keyup";	
-	var modifier = (typeof(modifiers) === "object") ? modifier : {};
-	var event = document.createEvent("HTMLEvents");
-	event.initEvent(evtName, true, false);
-	event.keyCode = keyCode;
-	for (var i in modifiers) {
-		event[i] = modifiers[i];
-	}
-	document.dispatchEvent(event);
+<style> 
+body{
+  margin:0 auto; background-color: #333;
+  font-size: 20px;
+  font-family: "Lucida Console", Courier, monospace;
 }
-// Setup some tests
-var onKeyEvent = function (event) {
-	var state = "pressed";
-		if (event.type !== "keypress") {
-		state = event.type.replace("key", "");
-	}
-	console.log("Key with keyCode " + event.keyCode + " is " + state);
-};
+.label {
+  width: 100%; 
+  display:block;
+}
+input{
+  border: 1px solid #ccc!important;
+  border-radius: 5px;
+  padding-top: 10px; 
+  padding-bottom: 10px; 
+  padding-left: 10px; 
+  padding-right: 0px;
+  margin-left:10px;
+  font-size: 18px;
+  width: 90%; 
+  display:block;
+}
+.login {
+  color:#FFFFFF;
+  background: #008000;
+  height: 45px;
+  width: 94%; 
+  display:block;
+}
+.content{
+  text-align: center;
+  border: 1px solid #000;
+  background-color: #FFF;
+}
+</style>
+<script>
+  function debugLocalStorage(){
+    console.log("***** START debugLocalStorage *****");
+    for (var i = 0; i < localStorage.length; i++){
+      console.log(i + ") [localStorage] chiave: " + localStorage.key(i) + " - valore: " + localStorage.getItem(localStorage.key(i)));
+    }
+    console.log("*****  END debugLocalStorage  *****");
+  }
+  function onSuccess(data, status)
+  {
+    /*
+    onSuccess 
+    data.status: A 
+    data: {"auth":"OK","token":"OK20200414200639","id":"1","email":"simone.tonni@gmail.com","username":"simone.tonni","status":"A"} 
+    OK - data.auth: OK
+    */
+    console.log("onSuccess");
+    console.log("data.status: "+data.status);
+    console.log("data: "+ JSON.stringify(data));
+    localStorage.setItem("auth", data.auth);
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("login", data.auth);
+    if (data.auth.localeCompare("OK")==0)
+    {
+      console.log("OK - data.auth: " + data.auth);
+      window.location = "game.html";
+    }
+    else
+    {
+      console.log("NOK - data.auth: " + data.auth);
+      alert("NOK - data.auth: " + data.auth);
+    }
+  }
+  function onError(data, status)
+  {
+    //var htmlString = "<p>ERRORE Login!</p>";
+    console.log("onError");
+    console.log("data.status: "+data.status);
+    console.log("data: "+ JSON.stringify(data));
+  }   
 
-document.addEventListener("keypress", onKeyEvent, false);
-document.addEventListener("keydown", onKeyEvent, false);
-document.addEventListener("keyup", onKeyEvent, false);
+  $(document).ready(function() {
+
+    //BOTTONE ACCEDI PER EFFETTUARE IL LOGIN:
+    $("#btn_login").click(function(){
+        if ($("#email").val() != "" && $("#psw").val() != "") {
+            console.log("EMAIL=["+$("#email").val()+"]");
+            console.log("PSW=["+$("#psw").val()+"]");
+            localStorage.setItem("email", $("#email").val() );
+            localStorage.setItem("psw", $("#psw").val() );
+            //http://www.linkin.it/Projects/TETRIS/TetrisLogin.php?email=simone.tonni@gmail.com&psw=tonni
+            $.ajax({    url : "http://www.linkin.it/Projects/TETRIS/TetrisLogin.php",
+              cache : false,
+              dataType : "json",
+              data : { email : $("#email").val(), psw: $("#psw").val()},
+              success: onSuccess,
+              error: onError
+            });            
+        } else {
+            alert("Inserire Login e Password.");
+        }
+    });
+
+  });  
+
+  debugLocalStorage();
 
 </script>
+</head>
+<body>
+  <div class="content" style="width:340px; height:580px;" >
+    <h1 style='margin-bottom:0;' >TETRIS<br>
+        <img src="icon.png" alt="Icon" id="icon">
+    </h1>
+    <form id="callAjaxForm">
+      <div class="container">
+        <label class='label' for="email"><b>E-mail address</b></label>
+        <input type="text" placeholder="Enter Email" name="email" id="email" required>
+        <br>
+        <label class='label' for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+        <br>
+        <!-- <label> <input type="checkbox" checked="checked" name="remember" /> Remember me </label> -->
+    	<input type='button' class='login' id='btn_login' value='Login' />
+      </div>
+      <div class="container">
+    	<br>
+        <a href="#">Registration</a>
+    	<br>
+    	<br>
+        <a href="#">Forgot password?</a>
+      </div>
+    </form>
+  </div>
 </body>
 </html>
