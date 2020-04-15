@@ -138,6 +138,24 @@
   font-weight: bold;
 }
 
+/* Speed */
+.blockrain-speed-holder {
+    position: absolute;
+    top: 13px;
+    left: 20px;
+    text-align: left;
+    font-size: 14px;
+}
+.blockrain-speed-msg {
+  font-size: 14px;  
+  line-height: 100%;
+  margin-bottom: 0.2em;
+}
+.blockrain-speed-num {
+  font-size: 20px;
+  font-weight: bold;
+}
+
 /* Menu */
 .blockrain-start-holder, .blockrain-game-over-holder {
   position: absolute;

@@ -16,21 +16,22 @@ button {
   display: inline-block;
   font-size: 20px;
   margin-left: 5px;
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin-top: 3px;
+  margin-bottom: 3px;
   cursor: pointer;
   height: 87px;
   display: block;
   width: 100%;
 }
-#level{
+#level, #theme{
   background-color: #FFF; 
   font-family: "Lucida Console", Courier, monospace;
   margin-left: 5px;
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin-top: 3px;
+  margin-bottom: 3px;
   width: 100%;
 }
+#theme{text-transform:capitalize;}
 .verde{ background-color: #28a745; }
 .rosso{ background-color: #dc3545; }
 .blu{ background-color: #007bff; }
@@ -44,6 +45,7 @@ button {
 <div class="game" style="width:250px; height:580px;float:left; display:block"></div>
 <div class="control" style="float:left; display:block; width:90px; height:580px; valign:bottom">
 <div id='level'>Level: 1</div> 
+<div id='theme' align=center >Retro</div> 
 <button class='verde' id='pause'>Pause</button>
 <button class='rosso' id='rleft'><img src='assets/control/rotate_left.png' /></button>
 <button class='blu' id='rright'><img src='assets/control/rotate_right.png' /></button>
@@ -72,8 +74,8 @@ button {
 	var _tot_lines = 0;
 	var _new_speed = 10;
 	var _level = 1;
-	var _theme = ['','','gameboy','candy','custom','modern','retro','monochrome','aerolab','vim',
-	                    'gameboy','candy','custom','modern','retro','monochrome','aerolab','vim']
+	var _theme = ['retro','retro','gameboy','candy','custom','modern','mono','aerolab','vim','texture',
+	              'retro','gameboy','candy','custom','modern','mono','aerolab','vim','texture']
 	$(document).ready(function() {
 	    console.log( "ready!" );
 	    // $('.game').blockrain();
@@ -116,6 +118,7 @@ button {
 					var audio = new Audio('assets/audio/levelUp.mp3');
 	                audio.play();
 	                $('#level').html("Level: " + _level);
+	                $('#theme').html(_theme[_level]);
 				}
 				console.log("Level: " + _level + " - Lines: " + _tot_lines + " - Speed: "  +_new_speed);
 			},
@@ -134,6 +137,9 @@ button {
 	 	_new_speed = 10;
 	 	_level = 1;
 		$('.game').blockrain({ speed: _new_speed });
+		$('.game').blockrain( 'theme', _theme[_level] );
+		$('#level').html("Level: " + _level);
+		$('#theme').html("retro");
         var email = localStorage.getItem("email");
         var psw = localStorage.getItem("psw");
 		console.log("EMAIL=["+email+"]");

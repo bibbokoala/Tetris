@@ -81,6 +81,18 @@ input{
   }   
 
   $(document).ready(function() {
+   if(localStorage.getItem("email") != null){
+      var email = localStorage.getItem("email");
+      if(email.length>5){
+         $("#email").val(email);
+      }
+      if(localStorage.getItem("psw") != null){
+         var psw = localStorage.getItem("psw");
+         if(psw.length>1){
+            $("#psw").val(psw);
+         }
+      }
+   }
 
     var audio = new Audio('assets/audio/tetrisTheme.mp3');
     audio.play();
