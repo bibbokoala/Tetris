@@ -33,6 +33,24 @@ input{
   width: 94%; 
   display:block;
 }
+.reg {
+  color:#FFFFFF;
+  background: #000080;
+  padding-top: 3px; 
+  padding-bottom: 5px; 
+  height: 35px;
+  width: 94%; 
+  display:block;
+}
+.forgot {
+  color:#FFFFFF;
+  background: #5c5c5c;
+  padding-top: 3px; 
+  padding-bottom: 5px; 
+  height: 35px;
+  width: 94%; 
+  display:block;
+}
 .content{
   text-align: center;
   border: 1px solid #000;
@@ -49,12 +67,44 @@ input{
   }
   function onSuccess(data, status)
   {
-    /*
-    onSuccess 
-    data.status: A 
-    data: {"auth":"OK","token":"OK20200414200639","id":"1","email":"simone.tonni@gmail.com","username":"simone.tonni","status":"A"} 
-    OK - data.auth: OK
-    */
+    console.log("onSuccess");
+    console.log("data.status: "+data.status);
+    console.log("data: "+ JSON.stringify(data));
+    localStorage.setItem("auth", data.auth);
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("login", data.auth);
+    localStorage.setItem("status", data.status);
+    if (data.auth.localeCompare("OK")==0)
+    {
+      console.log("OK - data.auth: " + data.auth);
+      if (data.status.localeCompare("A")==0)
+      {
+        console.log("OK - data.status: " + data.status);
+        window.location = "game.html";
+      }
+      else
+      {
+        console.log("NOK - data.status: " + data.status);
+        alert("[USER NOT ACTIVE] \n\nplease click the activation link on your mail. (InBox or Spam) \n\n[data.status: " + data.status + "]");
+      }
+    }
+    else
+    {
+      console.log("NOK - data.auth: " + data.auth);
+      alert("[LOGIN ERROR] \n\nplease check your mail and password. \n\n[data.auth: " + data.auth + "]");
+    }
+  }
+
+  function onError(data, status)
+  {
+    //var htmlString = "<p>ERRORE Login!</p>";
+    console.log("onError");
+    console.log("data.status: "+data.status);
+    console.log("data: "+ JSON.stringify(data));
+  }   
+
+  function onSuccessReg(data, status)
+  {
     console.log("onSuccess");
     console.log("data.status: "+data.status);
     console.log("data: "+ JSON.stringify(data));
@@ -64,21 +114,34 @@ input{
     if (data.auth.localeCompare("OK")==0)
     {
       console.log("OK - data.auth: " + data.auth);
-      window.location = "game.html";
+      alert("[REGISTRATION OK] \n\nplease click the activation link on your mail. (InBox or Spam) \n\n[" + data.activation + "]");
     }
     else
     {
       console.log("NOK - data.auth: " + data.auth);
-      alert("NOK - data.auth: " + data.auth);
+      alert("[REGISTRATION ERROR] \n\nplease repeate the registration with email and password. \n\n[error: " + data.token + "]");
     }
   }
-  function onError(data, status)
+
+  function onSuccessForgot(data, status)
   {
-    //var htmlString = "<p>ERRORE Login!</p>";
-    console.log("onError");
+    console.log("onSuccess");
     console.log("data.status: "+data.status);
     console.log("data: "+ JSON.stringify(data));
-  }   
+    localStorage.setItem("auth", data.auth);
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("login", data.auth);
+    if (data.auth.localeCompare("OK")==0)
+    {
+      console.log("OK - data.auth: " + data.auth);
+      alert("[FORGOT PASSWORD OK] \n\ncheck your mail. (InBox or Spam) \n\n[" + data.activation + "]");
+    }
+    else
+    {
+      console.log("NOK - data.auth: " + data.auth);
+      alert("[FORGOT PASSWORD ERROR] \n\nplease repeate the forgot password with email. \n\n[error: " + data.token + "]");
+    }
+  }
 
   $(document).ready(function() {
    if(localStorage.getItem("email") != null){
@@ -113,7 +176,45 @@ input{
               error: onError
             });            
         } else {
-            alert("Inserire Login e Password.");
+            alert("Insert Login and Password for Login!");
+        }
+    });
+
+    //BOTTONE REG PER EFFETTUARE LA REGISTRAZIONE:
+    $("#btn_reg").click(function(){
+        if ($("#email").val() != "" && $("#psw").val() != "") {
+            console.log("EMAIL=["+$("#email").val()+"]");
+            console.log("PSW=["+$("#psw").val()+"]");
+            localStorage.setItem("email", $("#email").val() );
+            localStorage.setItem("psw", $("#psw").val() );
+            //http://www.linkin.it/Projects/TETRIS/TetrisLogin.php?email=simone.tonni@gmail.com&psw=tonni
+            $.ajax({    url : "http://www.linkin.it/Projects/TETRIS/TetrisReg.php",
+              cache : false,
+              dataType : "json",
+              data : { email : $("#email").val(), psw: $("#psw").val()},
+              success: onSuccessReg,
+              error: onError
+            });            
+        } else {
+            alert("Insert Login and Password for Registration!");
+        }
+    });
+
+    //BOTTONE RECUPERARE LA PASSWORD:
+    $("#btn_forgot").click(function(){
+        if ($("#email").val() != "" ) {
+            console.log("EMAIL=["+$("#email").val()+"]");
+            localStorage.setItem("email", $("#email").val() );
+            //http://www.linkin.it/Projects/TETRIS/TetrisForgot.php?email=simone.tonni@gmail.com
+            $.ajax({    url : "http://www.linkin.it/Projects/TETRIS/TetrisForgot.php",
+              cache : false,
+              dataType : "json",
+              data : { email : $("#email").val(), psw: $("#psw").val()},
+              success: onSuccessForgot,
+              error: onError
+            });            
+        } else {
+            alert("Insert Email for Forgt Password!");
         }
     });
 
@@ -139,14 +240,11 @@ input{
         <!-- <label> <input type="checkbox" checked="checked" name="remember" /> Remember me </label> -->
     	<input type='button' class='login' id='btn_login' value='Login' />
       </div>
-      <div class="container">
-    	<br>
-        <a href="#">Registration</a>
-    	<br>
-    	<br>
-        <a href="#">Forgot password?</a>
-      </div>
     </form>
+    	<br>
+      <input type='button' class='reg' id='btn_reg' value='Registration' />
+      <br>
+      <input type='button' class='forgot' id='btn_forgot' value='Forgot Password' />
   </div>
 </body>
 </html>
