@@ -23,15 +23,17 @@ button {
   display: block;
   width: 100%;
 }
-#level, #theme{
+#level, #record{
   background-color: #FFF; 
   font-family: "Lucida Console", Courier, monospace;
   margin-left: 5px;
+  font-size: 14px;
   margin-top: 3px;
   margin-bottom: 3px;
   width: 100%;
+  padding-left:3px;
+  text-transform:capitalize;
 }
-#theme{text-transform:capitalize;}
 .verde{ background-color: #28a745; }
 .rosso{ background-color: #dc3545; }
 .blu{ background-color: #007bff; }
@@ -44,14 +46,14 @@ button {
 <body>
 <div class="game" style="width:66%; height:100%;float:left; display:block"></div>
 <div class="control" style="float:left; display:block; width:33%; height:100%; valign:bottom">
-<div id='level'>Level: 1</div> 
-<div id='theme' align=center >Retro</div> 
-<button class='verde' id='pause'>Pause</button>
+<div id='level'>Level : 1 retro</div> 
+<div id='record'>Record: 0</div> 
+<button class='verde' id='pause'><img src='assets/control/pause.png' /></button>
 <button class='rosso' id='rleft'><img src='assets/control/rotate_left.png' /></button>
 <button class='blu' id='rright'><img src='assets/control/rotate_right.png' /></button>
 <button class='rosso' id='left'><img src='assets/control/left.png' /></button>
 <button class='blu' id='right'><img src='assets/control/right.png' /></button>
-<button class='arancione' id='down'>Down</button>
+<button class='arancione' id='down'><img src='assets/control/down.png' /></button>
 </div>
 <div style="clear:both;"></div>
 <script>
@@ -78,6 +80,11 @@ button {
 	              'retro','gameboy','candy','custom','modern','mono','aerolab','vim','texture']
 	$(document).ready(function() {
 	    console.log( "ready!" );
+	    //record
+	    var record = 0;
+	    if (localStorage.getItem("record_points")!=null)
+	    	record = localStorage.getItem("record_points");
+	    $('#record').html("Record: " + record);
 	    // $('.game').blockrain();
 	    $('.game').blockrain(
 		 { 
@@ -117,8 +124,7 @@ button {
 					$('.game').blockrain( 'theme', _theme[_level] );
 					var audio = new Audio('assets/audio/levelUp.mp3');
 	                audio.play();
-	                $('#level').html("Level: " + _level);
-	                $('#theme').html(_theme[_level]);
+	                $('#level').html(" Level: " + _level + " " + _theme[_level] );
 				}
 				console.log("Level: " + _level + " - Lines: " + _tot_lines + " - Speed: "  +_new_speed);
 			},
@@ -138,8 +144,12 @@ button {
 	 	_level = 1;
 		$('.game').blockrain({ speed: _new_speed });
 		$('.game').blockrain( 'theme', _theme[_level] );
-		$('#level').html("Level: " + _level);
-		$('#theme').html("retro");
+	    $('#level').html(" Level: " + _level + " " + _theme[_level] );
+	    var record = localStorage.getItem("record_points");
+	    //SE IL PUNTEGGIO ATTUALE > DI RECORD AGGIORNO RECORD
+	    if (score>record){
+	    	$('#record').html("Record: " + score);
+	    }
         var email = localStorage.getItem("email");
         var psw = localStorage.getItem("psw");
 		console.log("EMAIL=["+email+"]");
@@ -157,9 +167,13 @@ button {
 
     // Pause
     $( "#pause" ).click(function() {
-    	var text = $( "#pause" ).text();
-    	if (text === 'Pause' ){
-    		$('#pause').text("Resume");
+    	var html = $( "#pause" ).html();
+		console.log( html );
+		var pause_img ='<img src="assets/control/pause.png">';
+		var resume_img ='<img src="assets/control/resume.png">';
+    	if (html === pause_img ){
+    		//$("#myButton").html("Button New Text");
+    		$('#pause').html(resume_img);
   			$('.game').blockrain('pause');
   			$('#rleft').attr("disabled", true);
   			$('#rright').attr("disabled", true);
@@ -170,7 +184,7 @@ button {
 		    audio.play();
     	}
     	else{
-    		$('#pause').text("Pause");
+    		$('#pause').html(pause_img);
   			$('.game').blockrain('resume');
   			$('#rleft').attr("disabled", false);
   			$('#rright').attr("disabled", false);
