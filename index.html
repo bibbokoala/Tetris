@@ -56,6 +56,9 @@ input{
   border: 1px solid #000;
   background-color: #FFF;
 }
+#ranking{
+ font-size: 12px;
+}
 </style>
 <script>
   function debugLocalStorage(){
@@ -106,7 +109,7 @@ input{
 
   function onSuccessReg(data, status)
   {
-    console.log("onSuccess");
+    console.log("onSuccessReg");
     console.log("data.status: "+data.status);
     console.log("data: "+ JSON.stringify(data));
     localStorage.setItem("auth", data.auth);
@@ -126,7 +129,7 @@ input{
 
   function onSuccessForgot(data, status)
   {
-    console.log("onSuccess");
+    console.log("onSuccessForgot");
     console.log("data.status: "+data.status);
     console.log("data: "+ JSON.stringify(data));
     localStorage.setItem("auth", data.auth);
@@ -144,8 +147,32 @@ input{
     }
   }
 
+  function onSuccessRank(data, status)
+  {
+    console.log("onSuccessRank");
+    console.log("data: "+ JSON.stringify(data));
+    var html ="<table width='100%' border=0>";
+    for (var i = 0; i < data.length; i++){
+      html += "<tr><td>"+(i+1)+"</td>"+
+              "<td align=left style='padding-left:5px;' >" +data[i].username + 
+              "</td><td align=right style='padding-right:5px;' >" + data[i].record_points + "</td></tr>";
+    }
+    html += "</table>";
+    $("#ranking").html(html);
+  }
+
   $(document).ready(function() {
-   if(localStorage.getItem("email") != null){
+    //recupero la classifica
+    $.ajax({    url : "http://www.linkin.it/Projects/TETRIS/TetrisRanking.php",
+      cache : false,
+      dataType : "json",
+      // data : { email : $("#email").val(), psw: $("#psw").val()},
+      success: onSuccessRank,
+      error: onError
+    });  
+
+    //SETTO I VALORI DI email e password se presenti nel localStorage
+    if(localStorage.getItem("email") != null){
       var email = localStorage.getItem("email");
       if(email.length>5){
          $("#email").val(email);
@@ -156,7 +183,7 @@ input{
             $("#psw").val(psw);
          }
       }
-   }
+    }
 
     var audio = new Audio('assets/audio/tetrisTheme.mp3');
     audio.play();
@@ -227,9 +254,18 @@ input{
 </head>
 <body>
   <div class="content" style="width:100%; height:580px;" >
-    <h1 style='margin-bottom:0;' >TETRIS<br>
-        <img src="icon.png" alt="Icon" id="icon">
-    </h1>
+    <h1 style='margin-bottom:0;' >TETRIS</h1>
+    <table width='95%' border=0>
+      <tr>
+        <td width='40%'>
+          <img src="icon.png" alt="Icon" id="icon">
+        </td>
+        <td align=center>
+          <b>RANKING TOP 5</b><br>
+          <div id='ranking'>-</div>
+        </td>
+      </tr>
+    </table>    
     <form id="callAjaxForm">
       <div class="container">
         <label class='label' for="email"><b>E-mail address</b></label>

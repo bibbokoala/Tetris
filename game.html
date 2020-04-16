@@ -237,6 +237,19 @@ button {
 	});
 
 function simulateKey (keyCode, type, modifiers) {
+	//QUALSIASI BOTTONE CLICCO BLOCCO PREVENTIVAMENTE l'EVENTO SUL BOTTONE DOWN
+	if (keyCode!=40){
+		var evtName = (typeof(type) === "string") ? "key" + type : "keyup";	
+		var modifier = (typeof(modifiers) === "object") ? modifier : {};
+		var event = document.createEvent("HTMLEvents");
+		event.initEvent(evtName, true, false);
+		event.keyCode = 40 ;
+		for (var i in modifiers) {
+			event[i] = modifiers[i];
+		}
+		document.dispatchEvent(event);
+	}
+	//SIMULO IL CLICK 
 	var evtName = (typeof(type) === "string") ? "key" + type : "keydown";	
 	var modifier = (typeof(modifiers) === "object") ? modifier : {};
 	var event = document.createEvent("HTMLEvents");
@@ -246,15 +259,18 @@ function simulateKey (keyCode, type, modifiers) {
 		event[i] = modifiers[i];
 	}
 	document.dispatchEvent(event);
-	var evtName = (typeof(type) === "string") ? "key" + type : "keyup";	
-	var modifier = (typeof(modifiers) === "object") ? modifier : {};
-	var event = document.createEvent("HTMLEvents");
-	event.initEvent(evtName, true, false);
-	event.keyCode = keyCode;
-	for (var i in modifiers) {
-		event[i] = modifiers[i];
+	//SOLO X IL BOTTONE DOWN NO
+	if (keyCode!=40){
+		var evtName = (typeof(type) === "string") ? "key" + type : "keyup";	
+		var modifier = (typeof(modifiers) === "object") ? modifier : {};
+		var event = document.createEvent("HTMLEvents");
+		event.initEvent(evtName, true, false);
+		event.keyCode = keyCode;
+		for (var i in modifiers) {
+			event[i] = modifiers[i];
+		}
+		document.dispatchEvent(event);
 	}
-	document.dispatchEvent(event);
 }
 // Setup some tests
 var onKeyEvent = function (event) {
