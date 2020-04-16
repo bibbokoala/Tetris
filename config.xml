@@ -52,7 +52,7 @@
     <gap:plugin name="net.tunts.webintent" />
      -->
 
-    <!-- Core plugins -->
+    <!-- Core plugins  RIMOSSI TUTTI I PLUGIN NON NECESSARI
     <plugin name="cordova-plugin-battery-status" spec="~2.0.3" />
     <plugin name="cordova-plugin-camera" spec="~4.1.0" />
     <plugin name="cordova-plugin-console" spec="~1.1.0" />
@@ -61,6 +61,7 @@
     <plugin name="cordova-plugin-device-motion" spec="~2.0.1" />
     <plugin name="cordova-plugin-device-orientation" spec="~2.0.1" />
     <plugin name="cordova-plugin-dialogs" spec="~2.0.2" />
+     -->
     <!--
     <plugin name="cordova-plugin-file" spec="~6.0.2" />
     <plugin name="cordova-plugin-file-transfer" spec="~1.7.1" />
@@ -143,10 +144,12 @@
     <plugin name="cordova-plugin-whitelist" version="1" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <!-- RIMOSSE LE AUTORIZZAZIONI NON NECESSARIE
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    -->
     <allow-intent href="*.html" />
 <!-- parametri per scegliere su quale piattaforma compilare:
 <platform name="ios" />
